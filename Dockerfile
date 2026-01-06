@@ -22,4 +22,3 @@ COPY bot.py .
 
 # Запускаем бота
 CMD ["python", "-u", "bot.py"]
-```
