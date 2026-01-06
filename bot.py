@@ -61,22 +61,31 @@ def init_firebase():
     global db
     
     try:
-        # Инициализация без credentials для продакшена
-        # В продакшене используются переменные окружения Google Cloud
         if not firebase_admin._apps:
-            # Для локального тестирования можно использовать credentials.json
-            # cred = credentials.Certificate('credentials.json')
-            # firebase_admin.initialize_app(cred)
+            # Читаем credentials из переменной окружения
+            import json
+            creds_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS_JSON')
             
-            # Для продакшена (автоматические credentials)
-            firebase_admin.initialize_app(options={
-                'projectId': FIREBASE_PROJECT_ID,
-            })
+            if creds_json:
+                # Парсим JSON из переменной окружения
+                creds_dict = json.loads(creds_json)
+                cred = credentials.Certificate(creds_dict)
+                firebase_admin.initialize_app(cred)
+                logger.info("✅ Firebase инициализирован с credentials из переменной окружения")
+            else:
+                # Fallback - пробуем автоматические credentials
+                firebase_admin.initialize_app(options={
+                    'projectId': FIREBASE_PROJECT_ID,
+                })
+                logger.info("✅ Firebase инициализирован с автоматическими credentials")
         
         db = firestore.client()
-        logger.info("✅ Firebase инициализирован")
+        logger.info("✅ Firebase клиент создан")
         return True
         
+    except Exception as e:
+        logger.error(f"❌ Ошибка инициализации Firebase: {e}")
+        return False
     except Exception as e:
         logger.error(f"❌ Ошибка инициализации Firebase: {e}")
         return False
