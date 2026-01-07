@@ -575,10 +575,6 @@ async def main():
     logger.info("✅ Бот работает, ожидание задач по расписанию...")
     logger.info("Press Ctrl+C to stop")
     
-  # Запускаем HTTP сервер для Render
-    health_thread = threading.Thread(target=run_health_server, daemon=True)
-    health_thread.start()
-    
     # Бесконечный цикл
     try:
         while True:
@@ -591,6 +587,11 @@ async def main():
         logger.info("👋 Бот остановлен")
 
 if __name__ == "__main__":
+      # Запускаем HTTP сервер для Render
+    health_thread = threading.Thread(target=run_health_server, daemon=True)
+    health_thread.start()
+
+    # Запускаем бота
     asyncio.run(main())
     
 # ============= HTTP SERVER ДЛЯ RENDER =============
