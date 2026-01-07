@@ -66,12 +66,23 @@ def init_firebase():
             import json
             creds_json = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS_JSON')
             
+            # ОТЛАДКА
+            if creds_json:
+                logger.info(f"📋 Переменная найдена, длина: {len(creds_json)} символов")
+            else:
+                logger.error("❌ Переменная GOOGLE_APPLICATION_CREDENTIALS_JSON пустая или не найдена!")
+            
             if creds_json:
                 # Парсим JSON из переменной окружения
-                creds_dict = json.loads(creds_json)
-                cred = credentials.Certificate(creds_dict)
-                firebase_admin.initialize_app(cred)
-                logger.info("✅ Firebase инициализирован с credentials из переменной окружения")
+                try:
+                    creds_dict = json.loads(creds_json)
+                    logger.info("✅ JSON успешно распарсен")
+                    cred = credentials.Certificate(creds_dict)
+                    firebase_admin.initialize_app(cred)
+                    logger.info("✅ Firebase инициализирован с credentials из переменной окружения")
+                except json.JSONDecodeError as je:
+                    logger.error(f"❌ Ошибка парсинга JSON: {je}")
+                    raise
             else:
                 # Fallback - пробуем автоматические credentials
                 firebase_admin.initialize_app(options={
@@ -83,9 +94,6 @@ def init_firebase():
         logger.info("✅ Firebase клиент создан")
         return True
         
-    except Exception as e:
-        logger.error(f"❌ Ошибка инициализации Firebase: {e}")
-        return False
     except Exception as e:
         logger.error(f"❌ Ошибка инициализации Firebase: {e}")
         return False
