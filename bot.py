@@ -33,8 +33,8 @@ FIREBASE_COLLECTION = "users"
 FIREBASE_USER_DOC = "veronika"
 
 # Расписание (московское время UTC+3)
-DAILY_REPORT_TIME = "15:10"  # Ежедневный отчёт
-SHAME_CHECK_TIME = "15:12"   # Проверка на лоханье
+DAILY_REPORT_TIME = "15:46"  # Ежедневный отчёт
+SHAME_CHECK_TIME = "15:48"   # Проверка на лоханье
 WEEKLY_SUMMARY_TIME = "20:00"  # Еженедельные итоги (воскресенье)
 
 # Дата старта работы бота (None = работает сразу)
