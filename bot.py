@@ -33,8 +33,8 @@ FIREBASE_COLLECTION = "users"
 FIREBASE_USER_DOC = "veronika"
 
 # Расписание (московское время UTC+3)
-DAILY_REPORT_TIME = "20:22"  # Ежедневный отчёт
-SHAME_CHECK_TIME = "20:24"   # Проверка на лоханье
+DAILY_REPORT_TIME = "20:32"  # Ежедневный отчёт
+SHAME_CHECK_TIME = "20:34"   # Проверка на лоханье
 WEEKLY_SUMMARY_TIME = "20:00"  # Еженедельные итоги (воскресенье)
 
 # Дата старта работы бота (None = работает сразу)
@@ -203,7 +203,7 @@ def format_shame_message(data: Dict) -> str:
     deadline_str = data.get('deadlineDate')
     if deadline_str:
         deadline = datetime.fromisoformat(deadline_str.replace('Z', '+00:00'))
-        days_left = (deadline - datetime.now(timezone.utc).replace(tzinfo=None)).days
+        days_left = (deadline.replace(tzinfo=None) - datetime.now()).days
     else:
         days_left = 0
     
