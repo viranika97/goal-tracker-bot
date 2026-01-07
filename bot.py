@@ -203,7 +203,7 @@ def format_shame_message(data: Dict) -> str:
     deadline_str = data.get('deadlineDate')
     if deadline_str:
         deadline = datetime.fromisoformat(deadline_str.replace('Z', '+00:00'))
-        days_left = (deadline - datetime.now()).days
+        days_left = (deadline - datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
     else:
         days_left = 0
     
