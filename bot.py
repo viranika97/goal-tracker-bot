@@ -587,42 +587,5 @@ async def main():
         logger.info("👋 Бот остановлен")
 
 if __name__ == "__main__":
-      # Запускаем HTTP сервер для Render
-    health_thread = threading.Thread(target=run_health_server, daemon=True)
-    health_thread.start()
-
-    # Запускаем бота
     asyncio.run(main())
     
-# ============= HTTP SERVER ДЛЯ RENDER =============
-# Render требует открытый порт для Web Service
-# Создаём минимальный HTTP сервер
-
-import threading
-from http.server import HTTPServer, BaseHTTPRequestHandler
-
-class HealthCheckHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        """Health check endpoint"""
-        if self.path == '/health':
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'Bot is running')
-        else:
-            self.send_response(404)
-            self.end_headers()
-    
-    def log_message(self, format, *args):
-        """Отключить логи HTTP сервера"""
-        pass
-
-def run_health_server():
-    """Запустить HTTP сервер в отдельном потоке"""
-    port = int(os.environ.get('PORT', 10000))
-    server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
-    logger.info(f"🌐 Health check server started on port {port}")
-    server.serve_forever()
-
-# В конце main() функции, ПЕРЕД бесконечным циклом
-# Добавьте запуск HTTP сервера
