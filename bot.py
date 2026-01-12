@@ -25,7 +25,7 @@ from firebase_admin import credentials, firestore
 
 # Telegram
 BOT_TOKEN = "8372871931:AAG5_MQypUetuzorBeluXJpWv54cr5PbUvg"
-CHANNEL_ID = "@viranika_12_weeks"
+CHANNEL_ID = "@viranika97_12_weeks"
 
 # Firebase
 FIREBASE_PROJECT_ID = "goal-tracker-1ad42"
