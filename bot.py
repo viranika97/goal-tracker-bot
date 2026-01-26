@@ -33,7 +33,7 @@ FIREBASE_COLLECTION = "users"
 FIREBASE_USER_DOC = "veronika"
 
 # Расписание (московское время UTC+3)
-DAILY_REPORT_TIME = "21:08"      # Ежедневный отчёт
+DAILY_REPORT_TIME = "21:01"      # Ежедневный отчёт
 SHAME_CHECK_TIME = "23:01"       # Проверка на лоханье
 WEEKLY_SUMMARY_TIME = "20:01"    # Еженедельные итоги (воскресенье)
 
